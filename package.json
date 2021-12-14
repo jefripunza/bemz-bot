@@ -1,5 +1,5 @@
 {
-  "name": "bot-vip",
+  "name": "bot-bemz",
   "version": "1.0.0",
   "description": "untuk belajar",
   "main": "index.js",
@@ -13,12 +13,15 @@
     "whatsapp",
     "vip"
   ],
-  "author": "ikhsan",
+  "author": "bambang",
   "license": "MIT",
   "dependencies": {
     "@adiwajshing/baileys": "^3.5.2",
     "express": "^4.17.1",
     "google-tts-api": "^2.0.2",
     "node-fetch": "^3.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
   }
 }

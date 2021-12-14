@@ -40,6 +40,7 @@ class WhatsApp {
       conn.logger.level = "debug";
       conn.chatOrderingKey = waChatKey(true); // order chats such that pinned chats are on top
     }
+    conn.version = [2, 2147, 15]
     conn.on("open", async function () {
       fs.writeFileSync(
         SESSION_DATA,
@@ -175,7 +176,7 @@ class WhatsApp {
     return `┌─「 _*${title}*_ 」\n│\n${text_inject}│\n└─「 >> _*${this.bot_name}*_ << 」`;
   }
   // =================================================================
-  async #deleteSession(onSuccess) {
+  async deleteSession(onSuccess) {
     await fs.unlink(this.SESSION_DATA, (err) => {
       if (err) {
         console.error(err);
@@ -196,7 +197,7 @@ class WhatsApp {
       }
     });
   }
-  #formatter(number, standard = "@c.us") {
+  formatter(number, standard = "@c.us") {
     let formatted = number;
     // const standard = '@c.us'; // @s.whatsapp.net / @c.us
     if (!String(formatted).endsWith("@g.us")) {
@@ -259,7 +260,7 @@ class WhatsApp {
    * @param {callback} onSuccess ketika selesai logout
    */
   async logout(onSuccess) {
-    await this.#deleteSession(async () => {
+    await this.deleteSession(async () => {
       await this.conn.clearAuthInfo();
       setTimeout(async () => {
         try {
@@ -397,7 +398,7 @@ class WhatsApp {
       const groupId = isGroup ? groupMetadata.jid : "";
       const groupMembers = isGroup ? groupMetadata.participants : "";
       const groupDesc = isGroup ? groupMetadata.desc : "";
-      const groupAdmins = isGroup ? getGroupAdmins(groupMembers) : "";
+      // const groupAdmins = isGroup ? getGroupAdmins(groupMembers) : "";
       const totalchat = await this.conn.chats.all();
 
       receive({
@@ -466,7 +467,7 @@ class WhatsApp {
   async sendAudio(number, quoted, audio_location, onSuccess) {
     await this.conn
       .sendMessage(
-        this.#formatter(number),
+        this.formatter(number),
         { url: audio_location },
         MessageType.audio,
         { mimetype: Mimetype.mp4Audio, quoted }

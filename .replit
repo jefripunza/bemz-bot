@@ -1,0 +1,1 @@
+run="npx nodemon -x 'node index.js' "
